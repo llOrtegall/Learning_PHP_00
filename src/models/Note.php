@@ -3,6 +3,7 @@
 namespace Proyect\Notas\models;
 
 use Proyect\Notas\lib\DataBase;
+use PDO;
 
 class Note extends DataBase
 {
@@ -34,10 +35,18 @@ class Note extends DataBase
         $query = $db->connect()->prepare("SELECT * FROM notes WHERE uuid = :uuid");
         $query->execute(['uuid' => $uuid]);
 
-        $note = new Note();
+        $note = Note::createFromArray($query->fetch(PDO::FETCH_ASSOC));
+
+        return $note;
     }
 
+    public static function createFromArray($arr): Note
+    {
+        $note = new Note($arr['title'], $arr['content']);
+        $note->setUUID($arr['uuid']);
 
+        return $note;
+    }
 
     public function getUUID()
     {
