@@ -28,6 +28,17 @@ class Note extends DataBase
         $query->execute(['title' => $this->title, 'uuid' => $this->uuid, 'content' => $this->content]);
     }
 
+    public static function get($uuid)
+    {
+        $db = new Database();
+        $query = $db->connect()->prepare("SELECT * FROM notes WHERE uuid = :uuid");
+        $query->execute(['uuid' => $uuid]);
+
+        $note = new Note();
+    }
+
+
+
     public function getUUID()
     {
         return $this->uuid;
