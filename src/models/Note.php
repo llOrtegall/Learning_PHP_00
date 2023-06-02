@@ -19,7 +19,7 @@ class Note extends DataBase
 
     public function save()
     {
-        $query = $this->connect()->prepare("INSERT INTO notes(uuid, title, content, updated) VALUES(:uuid, :title, :content, NOW()");
+        $query = $this->connect()->prepare("INSERT INTO notes (uuid, title, content, updated) VALUES(:uuid, :title, :content, NOW())");
         $query->execute(['title' => $this->title, 'uuid' => $this->uuid, 'content' => $this->content]);
     }
 
