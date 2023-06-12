@@ -19,7 +19,7 @@ class Note extends DataBase
 
     public function save()
     {
-        $query = $this->connect()->prepare("INSERT INTO notes (uuid, title, content, updated) VALUES(:uuid, :title, :content, NOW())");
+        $query = $this->connect()->prepare("INSERT INTO notes (uuid, title, content, updated) VALUES(:uuid, :title, :content, NOW() )");
         $query->execute(['title' => $this->title, 'uuid' => $this->uuid, 'content' => $this->content]);
     }
 
@@ -38,6 +38,20 @@ class Note extends DataBase
         $note = Note::createFromArray($query->fetch(PDO::FETCH_ASSOC));
 
         return $note;
+    }
+
+    public static function getAll()
+    {
+        $notes = [];
+        $db = new DataBase();
+        $query = $db->connect()->query("SELECT * FROM notes");
+
+        while ($r = $query->fetch(PDO::FETCH_ASSOC)) {
+            $note = Note::createFromArray($r);
+            array_push($notes, $note);
+        }
+
+        return $notes;
     }
 
     public static function createFromArray($arr): Note

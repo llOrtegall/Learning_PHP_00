@@ -3,13 +3,12 @@
 use Proyect\Notas\models\Note;
 
 if (count($_POST) > 0) {
-    $title = isset($_POST['title']) ?? '';
-    $content = isset($_POST['content']) ?? '';
+    $title = isset($_POST['title']) ?? 'creando entrada';
+    $content = isset($_POST['content']) ?? 'creando entrada';
 
     $note = new Note($title, $content);
     $note->save();
 }
-
 
 ?>
 
@@ -25,9 +24,9 @@ if (count($_POST) > 0) {
 <body>
     <h1>Create note</h1>
     <form action="?view=create" method="POST">
-        <input type="text" name="title" placeholder="title">
+        <input type="text" name="title" placeholder="title...">
         <textarea name="content" id="" cols="30" rows="10"></textarea>
-        <button type="submit">Create Note</button>
+        <input type="submit" value="Create note">
     </form>
 </body>
 
