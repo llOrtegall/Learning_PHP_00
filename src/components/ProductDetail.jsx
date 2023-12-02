@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
@@ -25,6 +25,7 @@ export function ProductDetail () {
           <p>{product.stock}</p>
           <p>{product.category}</p>
           <p><img src={product.images[0]} alt="imagen" /></p>
+          <Link to='/products'>Volver A Prodcuts</Link>
         </div>
       )}
     </>
