@@ -1,16 +1,32 @@
+import { useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+
 export function ProductDetail () {
-  const product = {
-    id: 1,
-    title: 'Product 1',
-    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quibusdam.',
-    image: 'https://picsum.photos/200/300'
-  }
+  const [product, setProduct] = useState(null)
+
+  const { id } = useParams()
+
+  useEffect(() => {
+    axios.get(`https://dummyjson.com/products/${id}`)
+      .then(res => {
+        setProduct(res.data)
+      })
+  }, [id])
+
   return (
     <>
-      <h1>Product Detail</h1>
-      <h2>{product.title}</h2>
-      <img src={product.image} alt={product.title} />
-      <p>{product.description}</p>
+    {!product && <em>Cargando...</em>}
+      {product && (
+        <div>
+          <h1>{product.name}</h1>
+          <p>Precio: {product.price}</p>
+          <p>{product.description}</p>
+          <p>{product.stock}</p>
+          <p>{product.category}</p>
+          <p><img src={product.images[0]} alt="imagen" /></p>
+        </div>
+      )}
     </>
   )
 }
