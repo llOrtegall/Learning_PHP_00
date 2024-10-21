@@ -1,0 +1,2 @@
+let weight: number | string;
+
